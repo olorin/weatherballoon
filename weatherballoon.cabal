@@ -1,0 +1,105 @@
+name:                weatherballoon
+version:             0.1.0.0
+description:         Solution to the "Weather Observations" interview 
+                     question for Ambiata.
+synopsis:            Tool to analyze observations from a weather balloon.
+license:             MIT
+license-file:        LICENSE
+author:              Sharif Olorin
+maintainer:          sio@tesser.org
+copyright:           2015 Sharif Olorin
+category:            Data
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README.md
+                     tests/data/1000.txt
+                     tests/data/1000sorted.txt
+
+library
+  exposed-modules:     Data.WeatherBalloon
+                       Data.WeatherBalloon.Types
+  other-modules:       Data.WeatherBalloon.Util
+  build-depends:       base >=4.7 && <5,
+                       pipes,
+                       bytestring,
+                       pipes-csv,
+                       pipes-bytestring,
+                       text,
+                       time,
+                       QuickCheck,
+                       cassava,
+                       vector,
+                       old-locale,
+                       bifunctors,
+                       lens,
+                       containers,
+                       temporary,
+                       directory,
+                       transformers,
+                       process
+  hs-source-dirs:      lib
+  default-language:    Haskell2010
+
+executable weatherballoon-report
+  build-depends:       base >=4.7 && <5,
+                       pipes,
+                       pipes-csv,
+                       pipes-bytestring,
+                       optparse-applicative,
+                       temporary,
+                       transformers,
+                       directory,
+                       lens,
+                       containers,
+                       text,
+                       weatherballoon
+  hs-source-dirs:      src
+  main-is:             Report.hs
+  default-language:    Haskell2010
+  ghc-options:         -rtsopts
+                       -with-rtsopts "-M128m"
+  ghc-prof-options:    -fprof-auto
+
+executable weatherballoon-generate
+  build-depends:       base >=4.7 && <5,
+                       pipes,
+                       pipes-csv,
+                       pipes-bytestring,
+                       QuickCheck,
+                       bytestring,
+                       optparse-applicative,
+                       weatherballoon
+  hs-source-dirs:      src
+  main-is:             Generate.hs
+  default-language:    Haskell2010
+  ghc-options:         -threaded
+                       -rtsopts
+                       -with-rtsopts "-M128m"
+  ghc-prof-options:    -fprof-auto
+
+test-suite doctest
+  hs-source-dirs:      tests
+  main-is:             Doctest.hs
+  type:                exitcode-stdio-1.0
+  default-language:    Haskell2010
+  build-depends:       base >=4.5 && <5,
+                       doctest,
+                       weatherballoon
+
+test-suite hspec
+  hs-source-dirs:      tests
+  main-is:             Report.hs
+  type:                exitcode-stdio-1.0
+  default-language:    Haskell2010
+  build-depends:       base >=4.5 && <5,
+                       doctest,
+                       pipes,
+                       pipes-bytestring,
+                       transformers,
+                       lens,
+                       HUnit,
+                       hspec,
+                       containers,
+                       directory,
+                       text,
+                       weatherballoon
